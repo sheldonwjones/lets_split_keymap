@@ -87,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_SYM] = KEYMAP( \
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_EQL,  S(KC_7), S(KC_8), S(KC_9), S(KC_0), _______, \
   _______, XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_TILD, S(KC_4), S(KC_5), S(KC_6), KC_PIPE, _______, \
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PLUS, S(KC_1), S(KC_2), S(KC_2), _______, _______, \
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PLUS, S(KC_1), S(KC_2), S(KC_3), _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
