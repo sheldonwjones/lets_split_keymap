@@ -160,14 +160,14 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 
     case RALT_GT:
       if (record->event.pressed) {
-        if (keymap_config.swap_lalt_lgui) {
+        if (keymap_config.swap_ralt_rgui) {
           register_mods(MOD_RGUI);
         } else {
           register_mods(MOD_RALT);
         }
         record->tap.interrupted = 0;
       } else {
-        if (keymap_config.swap_lalt_lgui) {
+        if (keymap_config.swap_ralt_rgui) {
           unregister_mods(MOD_RGUI);
         } else {
           unregister_mods(MOD_RALT);
