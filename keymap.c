@@ -26,6 +26,19 @@ enum custom_macros {
   RALT_GT,
 };
 
+enum {
+  T_0 = 0,
+  T_1,
+  T_2,
+  T_3,
+  T_4,
+  T_5,
+  T_6,
+  T_7,
+  T_8,
+  T_9,
+};
+
 // Fillers to make layering more clear
 #define _______ KC_TRNS
 #define XXXXXXX KC_NO
@@ -63,7 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_QWERTY] = KEYMAP( \
   MEH_GRV, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS, \
-  CTL_ESC, F(_ARW), F(_SYM), F(_NUM), KC_F,    F(_GUI), KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
+  CTL_ESC, F(_ARW), F(_SYM), F(_NUM), F(_FUN), F(_GUI), KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
   KC_LSPO, CTL_Z,   KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  CTL_SLS, KC_RSPC, \
   KC_LBRC, KC_LCBR, F(_LT),  KC_LGUI, KC_SPC,  KC_TAB,  KC_ENT,  KC_BSPC, KC_RGUI, F(_GT),  KC_RCBR, KC_RBRC
 ),
@@ -122,22 +135,39 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
+/* FUN
+ * ,-----------------------------------------. ,-----------------------------------------.
+ * |      |      |      |      |      |      | |      |  F7  |  F8  |  F9  |  F10 |      |
+ * |------+------+------+------+------+------| |------+------+------+------+------+------|
+ * |      |      |      |      | FUN  |      | |      |  F4  |  F5  |  F6  |  F11 |      |
+ * |------+------+------+------+------+------| |------+------+------+------+------+------|
+ * |      |      |      |      |      |      | |      |  F1  |  F2  |  F3  |  F12 |      |
+ * |------+------+------+------+------+------| |------+------+------+------+------+------|
+ * |      |      |      |      |      |      | |      |      |      |      |      |      |
+ * `-----------------------------------------' `-----------------------------------------'
+ */
+[_FUN] = KEYMAP( \
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______, \
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, KC_F4,   KC_F5,   KC_F6,   KC_F11,  _______, \
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F12,  _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+),
 
 /* GUI
  * ,-----------------------------------------. ,-----------------------------------------.
- * |      |      |      |      |      |      | |      |alt(7)|alt(8)|alt(9)|alt(0)|      |
+ * |      |      |      |      |      |      | |      | I3 7 | I3 8 | I3 9 | I3 0 |      |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |      |      |      |      |      | GUI  | |      |alt(4)|alt(5)|alt(6)|      |      |
+ * |      |      |      |      |      | GUI  | |      | I3 4 | I3 5 | I3 6 |      |      |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |      |      |      |      |      |      | |      |alt(1)|alt(2)|alt(3)|      |      |
+ * |      |      |      |      |      |      | |      | I3 1 | I3 2 | I3 3 |      |      |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
  * |      |      |      |      |      |      | |      |      |      |      |      |      |
  * `-----------------------------------------' `-----------------------------------------'
  */
 [_GUI] = KEYMAP( \
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, I3_7,    I3_8,    I3_9,    I3_0,    _______, \
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, I3_4,    I3_5,    I3_6,    XXXXXXX, _______, \
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, I3_1,    I3_2,    I3_3,    XXXXXXX, _______, \
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TD(T_7), TD(T_8), TD(T_9), TD(T_0), _______, \
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, TD(T_4), TD(T_5), TD(T_6), XXXXXXX, _______, \
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TD(T_1), TD(T_2), TD(T_3), XXXXXXX, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
@@ -156,9 +186,25 @@ const uint16_t PROGMEM fn_actions[] = {
     [_ARW] = ACTION_LAYER_TAP_KEY(_ARW, KC_A),
     [_SYM] = ACTION_LAYER_TAP_KEY(_SYM, KC_S),
     [_NUM] = ACTION_LAYER_TAP_KEY(_NUM, KC_D),
+    [_FUN] = ACTION_LAYER_TAP_KEY(_FUN, KC_F),
     [_GUI] = ACTION_LAYER_TAP_KEY(_GUI, KC_G),
     [_LT] = ACTION_MACRO_TAP(LALT_LT),
     [_GT] = ACTION_MACRO_TAP(RALT_GT),
+};
+
+//Tap Dance Definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+  //i3... Tap once for desktop #, twice move select to desktop #
+  [T_0]  = ACTION_TAP_DANCE_DOUBLE(I3_0, S(I3_0)),
+  [T_1]  = ACTION_TAP_DANCE_DOUBLE(I3_1, S(I3_1)),
+  [T_2]  = ACTION_TAP_DANCE_DOUBLE(I3_2, S(I3_2)),
+  [T_3]  = ACTION_TAP_DANCE_DOUBLE(I3_3, S(I3_3)),
+  [T_4]  = ACTION_TAP_DANCE_DOUBLE(I3_4, S(I3_4)),
+  [T_5]  = ACTION_TAP_DANCE_DOUBLE(I3_5, S(I3_5)),
+  [T_6]  = ACTION_TAP_DANCE_DOUBLE(I3_6, S(I3_6)),
+  [T_7]  = ACTION_TAP_DANCE_DOUBLE(I3_7, S(I3_7)),
+  [T_8]  = ACTION_TAP_DANCE_DOUBLE(I3_8, S(I3_8)),
+  [T_9]  = ACTION_TAP_DANCE_DOUBLE(I3_9, S(I3_9)),
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
