@@ -12,11 +12,16 @@ extern keymap_config_t keymap_config;
 #define _ARW 5
 #define _SYM 6
 #define _NUM 7
-#define _ADJUST 16
+#define _LT 8
+#define _GT 9
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
-  ADJUST
+};
+
+enum custom_macros {
+  LALT_LT,
+  RALT_GT,
 };
 
 // Fillers to make layering more clear
@@ -26,7 +31,7 @@ enum custom_keycodes {
 // Custom macros
 #define CTL_ESC     CTL_T(KC_ESC)               // Tap for Esc, hold for Ctrl
 #define CTL_Z       CTL_T(KC_Z)                 // Tap for Z, hold for Ctrl
-#define SFT_ENT     SFT_T(KC_ENT)               // Tap for Enter, hold for Shift
+#define CTL_SLS     RCTL_T(KC_SLSH)             // Tap for /, hold for Ctrl
 #define HPR_TAB     ALL_T(KC_TAB)               // Tap for Tab, hold for Hyper (Super+Ctrl+Alt+Shift)
 #define MEH_GRV     MEH_T(KC_GRV)               // Tap for Backtick, hold for Meh (Ctrl+Alt+Shift)
 
@@ -34,100 +39,81 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
  * ,-----------------------------------------. ,-----------------------------------------.
- * | Tab  |   Q  |   W  |   E  |   R  |   T  | |   Y  |   U  |   I  |   O  |   P  |  -   |
+ * |   ~  |   Q  |   W  |   E  |   R  |   T  | |   Y  |   U  |   I  |   O  |   P  |  -   |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * | Esc  |   A  |   S  |   D  |   F  |   G  | |   H  |   J  |   K  |   L  |   ;  |  "   |
+ * | Esc  |   A  |   S  |   D  |   F  |   G  | |   H  |   J  |   K  |   L  |   ;  |  '   |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  | |   N  |   M  |   ,  |   .  |   /  |Shift |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |   `  | Ctrl | Ctrl | Alt  | GUI  |Space | | Bksp |Enter | Left | Down |  Up  |Right |
+ * |   [  |   {  | Alt< | GUI  |Space | Tab  | | Enter| Bksp | GUI  | Alt> |   }  |  ]   |
  * `-----------------------------------------' `-----------------------------------------'
  */
 [_QWERTY] = KEYMAP( \
   MEH_GRV, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS, \
   CTL_ESC, F(_ARW), F(_SYM), F(_NUM), KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
-  KC_LSFT, CTL_Z,   KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, \
-  KC_LCTL, KC_LCTL, KC_LALT, KC_LGUI, KC_SPC,  KC_TAB,  KC_ENT,  KC_BSPC, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+  KC_LSPO, CTL_Z,   KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  CTL_SLS, KC_RSPC, \
+  KC_LBRC, KC_LCBR, F(_LT),  KC_LGUI, KC_SPC,  KC_TAB,  KC_ENT,  KC_BSPC, KC_RGUI, F(_GT),  KC_RCBR, KC_RBRC
 ),
 
 /* Arrow
  * ,-----------------------------------------. ,-----------------------------------------.
- * |      |      |      |      |      |      | |      |      |      |      |      | Bksp |
- * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |      | ARW  |      |      |      |      | |      | LEFT | DOWN |  UP  | RIGHT|      |
- * |------+------+------+------+------+------| |------+------+------+------+------+------|
  * |      |      |      |      |      |      | |      |      |      |      |      |      |
+ * |------+------+------+------+------+------| |------+------+------+------+------+------|
+ * |      | ARW  |      |      |      |      | | LEFT | DOWN |  UP  | RIGHT|      |      |
+ * |------+------+------+------+------+------| |------+------+------+------+------+------|
+ * |      |      |      |      |      |      | |AGnorm|AGswap|      |      |      |      |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
  * |      |      |      |      |      |      | |      |      |      |      |      |      |
  * `-----------------------------------------' `-----------------------------------------'
  */
 [_ARW] = KEYMAP( \
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_DEL, \
-  XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, XXXXXXX, \
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-  _______, _______, _______, _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+  XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, XXXXXXX, \
+  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, AG_SWAP, AG_NORM, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 ),
 
 /* Symbols
  * ,-----------------------------------------. ,-----------------------------------------.
- * |      |      |      |      |      |      | |   ^  |   &  |   *  |   (  |   )  |  -   |
+ * |      |      |      |      |      |      | |   =  |   &  |   *  |   (  |   )  |      |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |      |      | SYM  |      |      |  ~   | |   +  |   =  |   %  |   {  |   }  |  |   |
+ * |      |      | SYM  |      |      |      | |   ~  |   $  |   %  |   ^  |   |  |      |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |      |      |      |      |      |      | |   #  |   !  |   @  |   [  |   ]  |  \   |
+ * |      |      |      |      |      |      | |   +  |   !  |   @  |   #  |   /  |      |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |      |      |      |      |      |      | |      |      | Home |PageDn|PageUp| End  |
+ * |      |      |      |      |      |      | |      |      |      |      |      |      |
  * `-----------------------------------------' `-----------------------------------------'
  */
 [_SYM] = KEYMAP( \
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_TILD, \
-  XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, KC_TILD, KC_PLUS, KC_EQL,  KC_PERC, KC_LCBR, KC_RCBR, KC_PIPE, \
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_HASH, KC_EXLM, KC_AT,   KC_LBRC, KC_RBRC, KC_BSLS, \
-  _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_EQL,  S(KC_7), S(KC_8), S(KC_9), S(KC_0), _______, \
+  _______, XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_TILD, S(KC_4), S(KC_5), S(KC_6), KC_PIPE, _______, \
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PLUS, S(KC_1), S(KC_2), S(KC_2), _______, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
 /* Numbers
  * ,-----------------------------------------. ,-----------------------------------------.
- * |      |      |      |      |      |      | |      |   7  |   8  |   9  |   0  | Bksp |
+ * |      |      |      |      |      |      | |   =  |   7  |   8  |   9  |   0  |  -   |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |      |      |      | NUM  |      |      | |   +  |   4  |   5  |   6  |   *  |      |
+ * |      |      |      | NUM  |      |      | |   *  |   4  |   5  |   6  |   .  |      |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |      |      |      |      |      |      | |   -  |   1  |   2  |   3  |   /  |      |
+ * |      |      |      |      |      |      | |   +  |   1  |   2  |   3  |   /  |      |
  * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |      |      |      |      |      |      | |   0  |   .  |      |      |      |      |
+ * |      |      |      |      |      |      | |      |      |      |      |      |      |
  * `-----------------------------------------' `-----------------------------------------'
  */
 [_NUM] = KEYMAP( \
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX, \
-  XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, KC_PLUS, KC_4,    KC_5,    KC_6,    KC_DOT,  XXXXXXX, \
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MINS, KC_1,    KC_2,    KC_3,    KC_ASTR, XXXXXXX, \
-  _______, _______, _______, _______, _______, _______, KC_0,    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_EQL,  KC_7,    KC_8,    KC_9,    KC_0,    _______, \
+  _______, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, KC_ASTR, KC_4,    KC_5,    KC_6,    KC_DOT,  _______, \
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PLUS, KC_1,    KC_2,    KC_3,    _______, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
-/* Adjust (Lower + Raise)
- * ,-----------------------------------------. ,-----------------------------------------.
- * |      | Reset|      |      |      |      | |      |      |      |      |      | Reset|
- * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |      |      |      |Aud on|Audoff|AGnorm| |AGswap|Qwerty|Colemk|Dvorak|      |      |
- * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |      |      |      |      |      |      | |      |      |      |      |      |      |
- * |------+------+------+------+------+------| |------+------+------+------+------+------|
- * |      |      |      |      |      |      | |      |      |      |      |      |      |
- * `-----------------------------------------' `-----------------------------------------'
- */
-[_ADJUST] = KEYMAP( \
-  _______, RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, RESET, \
-  _______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  _______, _______, _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-)
 
 };
 
 #ifdef AUDIO_ENABLE
 float tone_qwerty[][2]     = SONG(QWERTY_SOUND);
-float tone_dvorak[][2]     = SONG(DVORAK_SOUND);
-float tone_colemak[][2]    = SONG(COLEMAK_SOUND);
 #endif
 
 void persistent_default_layer_set(uint16_t default_layer) {
@@ -139,7 +125,67 @@ const uint16_t PROGMEM fn_actions[] = {
     [_ARW] = ACTION_LAYER_TAP_KEY(_ARW, KC_A),
     [_SYM] = ACTION_LAYER_TAP_KEY(_SYM, KC_S),
     [_NUM] = ACTION_LAYER_TAP_KEY(_NUM, KC_D),
+    [_LT] = ACTION_MACRO_TAP(LALT_LT),
+    [_GT] = ACTION_MACRO_TAP(RALT_GT),
 };
+
+const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
+{
+  switch(id) {
+    case LALT_LT:
+      if (record->event.pressed) {
+        if (keymap_config.swap_lalt_lgui) {
+          register_mods(MOD_LGUI);
+        } else {
+          register_mods(MOD_LALT);
+        }
+        record->tap.interrupted = 0;
+      } else {
+        if (keymap_config.swap_lalt_lgui) {
+          unregister_mods(MOD_LGUI);
+        } else {
+          unregister_mods(MOD_LALT);
+        }
+
+        if (record->tap.count && !record->tap.interrupted) {
+          add_weak_mods(MOD_LSFT);
+          register_code(KC_COMM);
+          unregister_code(KC_COMM);
+          del_weak_mods(MOD_LSFT);
+        }
+
+        record->tap.count = 0;
+      }
+      break;
+
+    case RALT_GT:
+      if (record->event.pressed) {
+        if (keymap_config.swap_lalt_lgui) {
+          register_mods(MOD_RGUI);
+        } else {
+          register_mods(MOD_RALT);
+        }
+        record->tap.interrupted = 0;
+      } else {
+        if (keymap_config.swap_lalt_lgui) {
+          unregister_mods(MOD_RGUI);
+        } else {
+          unregister_mods(MOD_RALT);
+        }
+
+        if (record->tap.count && !record->tap.interrupted) {
+          add_weak_mods(MOD_RSFT);
+          register_code(KC_DOT);
+          unregister_code(KC_DOT);
+          del_weak_mods(MOD_RSFT);
+        }
+
+        record->tap.count = 0;
+      }
+      break;
+  }
+  return MACRO_NONE;
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -149,14 +195,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           PLAY_SONG(tone_qwerty);
         #endif
         persistent_default_layer_set(1UL<<_QWERTY);
-      }
-      return false;
-      break;
-    case ADJUST:
-      if (record->event.pressed) {
-        layer_on(_ADJUST);
-      } else {
-        layer_off(_ADJUST);
       }
       return false;
       break;
