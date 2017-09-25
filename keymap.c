@@ -9,11 +9,13 @@ extern keymap_config_t keymap_config;
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
 #define _QWERTY 0
-#define _ARW 5
-#define _SYM 6
-#define _NUM 7
-#define _LT 8
-#define _GT 9
+#define _ARW 1
+#define _SYM 2
+#define _NUM 3
+#define _FUN 4
+#define _GUI 5
+#define _LT 6
+#define _GT 7
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
@@ -35,6 +37,17 @@ enum custom_macros {
 #define HPR_TAB     ALL_T(KC_TAB)               // Tap for Tab, hold for Hyper (Super+Ctrl+Alt+Shift)
 #define MEH_GRV     MEH_T(KC_GRV)               // Tap for Backtick, hold for Meh (Ctrl+Alt+Shift)
 
+#define I3_0        LALT(KC_0)                  // i3wm desktop 0
+#define I3_1        LALT(KC_1)                  // i3wm desktop 1
+#define I3_2        LALT(KC_2)                  // i3wm desktop 2
+#define I3_3        LALT(KC_3)                  // i3wm desktop 3
+#define I3_4        LALT(KC_4)                  // i3wm desktop 4
+#define I3_5        LALT(KC_5)                  // i3wm desktop 5
+#define I3_6        LALT(KC_6)                  // i3wm desktop 6
+#define I3_7        LALT(KC_7)                  // i3wm desktop 7
+#define I3_8        LALT(KC_8)                  // i3wm desktop 8
+#define I3_9        LALT(KC_9)                  // i3wm desktop 9
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
@@ -50,7 +63,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_QWERTY] = KEYMAP( \
   MEH_GRV, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS, \
-  CTL_ESC, F(_ARW), F(_SYM), F(_NUM), KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
+  CTL_ESC, F(_ARW), F(_SYM), F(_NUM), KC_F,    F(_GUI), KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
   KC_LSPO, CTL_Z,   KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  CTL_SLS, KC_RSPC, \
   KC_LBRC, KC_LCBR, F(_LT),  KC_LGUI, KC_SPC,  KC_TAB,  KC_ENT,  KC_BSPC, KC_RGUI, F(_GT),  KC_RCBR, KC_RBRC
 ),
@@ -110,6 +123,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 
+/* GUI
+ * ,-----------------------------------------. ,-----------------------------------------.
+ * |      |      |      |      |      |      | |      |alt(7)|alt(8)|alt(9)|alt(0)|      |
+ * |------+------+------+------+------+------| |------+------+------+------+------+------|
+ * |      |      |      |      |      | GUI  | |      |alt(4)|alt(5)|alt(6)|      |      |
+ * |------+------+------+------+------+------| |------+------+------+------+------+------|
+ * |      |      |      |      |      |      | |      |alt(1)|alt(2)|alt(3)|      |      |
+ * |------+------+------+------+------+------| |------+------+------+------+------+------|
+ * |      |      |      |      |      |      | |      |      |      |      |      |      |
+ * `-----------------------------------------' `-----------------------------------------'
+ */
+[_GUI] = KEYMAP( \
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, I3_7,    I3_8,    I3_9,    I3_0,    _______, \
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, I3_4,    I3_5,    I3_6,    XXXXXXX, _______, \
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, I3_1,    I3_2,    I3_3,    XXXXXXX, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+),
+
 };
 
 #ifdef AUDIO_ENABLE
@@ -125,6 +156,7 @@ const uint16_t PROGMEM fn_actions[] = {
     [_ARW] = ACTION_LAYER_TAP_KEY(_ARW, KC_A),
     [_SYM] = ACTION_LAYER_TAP_KEY(_SYM, KC_S),
     [_NUM] = ACTION_LAYER_TAP_KEY(_NUM, KC_D),
+    [_GUI] = ACTION_LAYER_TAP_KEY(_GUI, KC_G),
     [_LT] = ACTION_MACRO_TAP(LALT_LT),
     [_GT] = ACTION_MACRO_TAP(RALT_GT),
 };
